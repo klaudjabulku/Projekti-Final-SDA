@@ -1,0 +1,87 @@
+create database superior_business_card;
+use superior_business_card;
+
+create table if not exists User(
+    id int primary key auto_increment,
+    name varchar(255),
+    surname varchar(255),
+    email varchar(255),
+    phone_Number varchar (35),
+    password varchar(255),
+    date_Created Date ,
+    date_Modified Date,
+    location varchar(255),
+    feedback varchar(255),
+    rating float,
+    role varchar(255)
+);
+
+create table if not exists Social_Media (
+id int primary key auto_increment,
+Linkedin varchar(255),
+Instagram varchar(255),
+Facebook varchar(255),
+id_user_social_media int not null,
+    constraint user_fk
+        foreign key (id_user_social_media) references User (id)
+        );
+
+
+create table if not exists Client(
+	id int primary key auto_increment,
+    name varchar(255),
+    surname varchar(255),
+    phone varchar(255),
+    email varchar(255)
+    );
+
+create table if not exists Meeting(
+	id int primary key auto_increment,
+    start_date DateTime
+    end_date DateTime,
+    subject varchar(255),
+    id_user_meeting int ,
+    id_client_meeting int ,
+    constraint id_user_meeting_fk
+    foreign key(id_user_meeting) references User(id),
+    constraint id_client_meeting_fk
+    foreign key(id_client_meeting) references Client(id)
+);
+
+create table if not exists Notification (
+id int primary key auto_increment,
+sender varchar (255),
+receiver varchar(255),
+carbon_copy varchar(255),
+subject varchar (255),
+body varchar (500),
+id_meeting_notification int not null,
+    constraint meeting_fk
+        foreign key (id_meeting_notification) references Meeting (id)
+        );
+
+create table if not exists Company(
+id int primary key auto_increment,
+company_Name varchar(255),
+id_user_company int,
+foreign key(id_user_company) references User(id)
+);
+ create table if not exists Payment(
+id int primary key auto_increment,
+paypal varchar(255),
+credit_card varchar(255),
+id_user_payment int,
+foreign key(id_user_payment) references User(id)
+);
+
+create table if not exists Upload(
+id int primary key auto_increment,
+image varbinary(255) ,
+filename varchar(255) ,
+id_user_upload int,
+foreign key(id_user_upload) references User(id)
+);
+
+INSERT INTO user (USERNAME, PASSWORD_HASH, ROLE)
+VALUES ('admin', '$2a$12$jYJYfiKpP7QRK9nCg9E9ueoHB0vg546SyvgHAeLpGIESaNXg734JO', 'ADMIN');
+;
